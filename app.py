@@ -176,14 +176,31 @@ def get_model_path(path: str) -> str:
         MODEL_PATH = path
     return MODEL_PATH
 
-def load_models():
-    model_path = get_model_path("C:\\Users\\user\\xgboost_model.pickle")  # Заменен на нужный путь
-    with open(model_path, 'rb') as file:  # Открытие файла для чтения в бинарном режиме
-        model = pickle.load(file)  # Загрузка модели
-    return model
 
-# Загрузка модели
-model = load_models()
+#Функция для загрузки тестовой модели
+def load_models_test():
+    model_path = get_model_path_test("D:/StartML_KarpovCourses/1st_catboost_model.cbm")
+    #model_path = get_model_path_test("/my/super/path")
+    # LOAD MODEL HERE PLS :)
+    from_file =  CatBoostClassifier()  # здесь не указываем параметры, которые были при обучении, в дампе модели все есть
+    from_file.load_model(model_path)
+    return from_file
+
+#Функция для загрузки контрольной модели
+def load_models_control():
+    model_path = get_model_path_control("D:/StartML_KarpovCourses/catboost_model_with_TDF.cbm")
+    #model_path = get_model_path_control("/my/super/path")
+    # LOAD MODEL HERE PLS :)
+    from_file =  CatBoostClassifier()  # здесь не указываем параметры, которые были при обучении, в дампе модели все есть
+    from_file.load_model(model_path)
+    return from_file
+
+#Загрузка моделей
+model_control = load_models_control()
+print(model_control)
+model_test = load_models_test()
+print(model_test)
+
 
 def batch_load_sql(query: str) -> pd.DataFrame:
     CHUNKSIZE = 10000
